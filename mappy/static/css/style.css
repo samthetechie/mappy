@@ -1,3 +1,11 @@
 html, body, #map {
     height: 100%;
 }
+
+.leaflet-control-zoom-in {
+    background-image: url(../images/zoom-in.png);
+    margin-bottom: 5px;
+}
+.leaflet-control-zoom-out {
+    background-image: url(../images/zoom-out.png);
+}

@@ -4,7 +4,22 @@
     <meta charset="UTF-8"/>
     <title>Mappy</title>
 
-    {% if MOBILE %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}" />
+
+    <script type="text/javascript">
+        var L_ROOT_URL = '{{ url_for('static', filename='') }}';
+    </script>
+
+    <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+    {% if config.MOBILE %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <script type="text/javascript">
@@ -18,33 +33,23 @@
     </script>
     {% endif %}
 
-    <script src="http://cdn.pubnub.com/pubnub-3.1.min.js"></script>
-
-    <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
-    <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.css" />
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.ie.css" />
-    <![endif]-->
-
-    {% if MOBILE and config.DEBUG and config.JSCONSOLE_KEY %}
+    {% if config.MOBILE and config.DEBUG and config.JSCONSOLE_KEY %}
     <script src="http://jsconsole.com/remote.js?{{ config.JSCONSOLE_KEY }}"></script>
     {% endif %}
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-
     <script type="text/javascript">
         var TILES_URL = '{{ config.TILES_URL }}'
         ,   API = {
-                add: "{{ url_for('add_feature') }}"
+                features: "{{ url_for('features') }}"
             };
     </script>
 </head>
 <body>
-    <div id="pubnub" sub-key="{{ config.PUBNUB_SUB_KEY }}"></div>
     <div id="map"></div>
+    <div sub-key="{{ config.PUBNUB_SUB_KEY }}" ssl="off" origin="pubsub.pubnub.com" id="pubnub"></div>
+    <script src="http://cdn.pubnub.com/pubnub-3.1.min.js"></script>
 </body>
 </html>

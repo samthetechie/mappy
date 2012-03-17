@@ -1,0 +1,15 @@
+Flask==0.8
+Flask-Script==0.3.2
+Jinja2==2.6
+Werkzeug==0.8.3
+anyjson==0.3.1
+argparse==1.2.1
+certifi==0.0.8
+chardet==1.0.1
+decorator==3.3.2
+geojson==1.0.1
+mongokit==0.7.2
+pymongo==2.1.1
+requests==0.10.8
+simplejson==2.4.0
+wsgiref==0.1.2
