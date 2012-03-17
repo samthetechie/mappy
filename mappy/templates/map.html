@@ -44,6 +44,9 @@
         var TILES_URL = '{{ config.TILES_URL }}'
         ,   API = {
                 features: "{{ url_for('features') }}"
+            },
+            CHANNELS = {
+                features: "{{ config['PUBNUB_CHANNELS']['features'] }}"
             };
     </script>
 </head>

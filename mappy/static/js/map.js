@@ -11,7 +11,7 @@ $(function() {
     getAllFeatures();
 
     PUBNUB.subscribe({
-        channel: "features",
+        channel: CHANNELS.features,
         callback: function(features) {
             geojsonLayer.addGeoJSON(features);
         },
