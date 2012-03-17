@@ -2,6 +2,8 @@ import os
 
 DEBUG = True
 
+MOBILE = True
+
 SECRET_KEY = 'development key'
 
 PORT = int(os.environ.get('PORT', 5000))
@@ -16,4 +18,6 @@ MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD')
 PUBNUB_PUB_KEY = ''
 PUBNUB_SUB_KEY = ''
 
-TILES_URL = '' # eg. 'http://{s}.tile.cloudmade.com/YOUR-API-KEY/997/256/{z}/{x}/{y}.png'
+TILES_URL = 'http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png'
+
+JSCONSOLE_KEY = ''
