@@ -37,6 +37,6 @@ def features():
         else:
             r = broadcast_message(app.config['PUBNUB_PUB_KEY'],
                                   app.config['PUBNUB_SUB_KEY'],
-                                  'features',
+                                  app.config['PUBNUB_CHANNELS']['features'],
                                   features_to_geojson([feature]))
             return make_response(None, 204)
