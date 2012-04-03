@@ -9,3 +9,7 @@ html, body, #map {
 .leaflet-control-zoom-out {
     background-image: url(../images/zoom-out.png);
 }
+
+#template_feature_form, #template_feature {
+    display: none;
+}

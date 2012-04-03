@@ -38,6 +38,8 @@
     {% endif %}
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://mustache.github.com/extras/mustache.js"></script>
+
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 
     <script type="text/javascript">
@@ -52,6 +54,28 @@
 </head>
 <body>
     <div id="map"></div>
+
+    {% raw %}
+    <div id="template_feature_form">
+        <p>Adding point at ({{lat}}, {{lon}})</p>
+        <form id="feature_form" onsubmit="return addFeature(this);">
+            <label for="title">Title:</label>
+            <input type="text" name="title"></input><br />
+            <span class="class1"><input type="radio" name="urgency" value="1"/></span> 
+            <span class="class2"><input type="radio" name="urgency" value="2" checked="checked"/></span> 
+            <span class="class3"><input type="radio" name="urgency" value="3"/></span><br />
+            <textarea name="info" maxlength="100"></textarea><br/> 
+            <input type="hidden" name="coords" value="{{lon}},{{lat}}"/> 
+            <input type="submit" /> 
+        </form>
+    </div>
+    <div id="template_feature">
+        <p>Title: {{title}}</p>
+        <p>Info: {{info}}</p>
+        <p>Urgency: {{urgency}}</p>
+    </div>
+    {% endraw %}
+
     <div sub-key="{{ config.PUBNUB_SUB_KEY }}" ssl="off" origin="pubsub.pubnub.com" id="pubnub"></div>
     <script src="http://cdn.pubnub.com/pubnub-3.1.min.js"></script>
 </body>

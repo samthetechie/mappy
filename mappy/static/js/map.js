@@ -2,6 +2,7 @@
 //     TILES_URL = root.TILES_URL;
 
 var map,
+    popup,
     features = {},
     geojsonLayer = new L.GeoJSON();
 
@@ -43,6 +44,18 @@ function initMap() {
 
     // events
     map.on('click', onMapClick);
+
+    geojsonLayer.on("featureparse", function (e) {
+        // Initialize popups with feature properties
+        if (!e.properties) {
+            e.properties = {};
+        }
+        //e.properties['_id'] = e.id;
+        e.layer.bindPopup(buildPopupContent(e.properties));
+        // Keep a reference on Marker
+        //markers[e.id] = e.layer;
+        //initMarker(e.layer, e.properties);
+    });
 }
 
 function getAllFeatures() {
@@ -58,9 +71,24 @@ function getAllFeatures() {
 }
 
 function onMapClick(e) {
-    addFeature(e.latlng);
+    popup = new L.Popup();
+    var template = $('#template_feature_form').html();
+    var content = Mustache.to_html(template, {'lon': e.latlng.lng.toFixed(4), 
+                                              'lat': e.latlng.lat.toFixed(4)});
+    popup.setLatLng(e.latlng);
+    popup.setContent(content);
+    map.openPopup(popup);
 }
 
-function addFeature(latlng) {
-    $.post(API.features, {lon: latlng.lng, lat: latlng.lat});
+function addFeature(form) {
+    console.log($(form).serialize());
+    $.post(API.features, $(form).serialize());
+    map.closePopup(popup);
+    return false;
+    // $.post(API.features, {lon: latlng.lng, lat: latlng.lat});
+}
+
+function buildPopupContent(properties) {
+    var template = $('#template_feature').html();
+    return Mustache.to_html(template, properties);
 }

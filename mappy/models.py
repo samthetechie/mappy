@@ -7,12 +7,16 @@ class Feature(Document):
 
     structure = {
             'title': unicode,
-            'body': unicode,
+            'info': unicode,
+            'urgency': int,
             'pos': (float, float),
             'date_creation': datetime.datetime,
     }
 
     default_values = {
+            'urgency': 1,
+            'title': u'no title',
+            'info': u'no info',
             'date_creation': datetime.datetime.utcnow
     }
 

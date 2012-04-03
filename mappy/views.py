@@ -26,11 +26,13 @@ def features():
     elif request.method == 'POST':
         feature = db.Feature()
 
-        feature['title'] = request.form.get('title')
-        feature['body'] = request.form.get('body')
-        feature['pos'] = float(request.form.get('lon')), float(request.form.get('lat'))
+        feature['title'] = request.values.get('title')
+        feature['info'] = request.values.get('info')
+        feature['urgency'] = int(request.values.get('urgency'))
+        feature['pos'] = map(float, request.values.get('coords').split(','))
 
         try:
+            print feature
             feature.save()
         except (ValidationError, RequireFieldError), e:
             return jsonify(error=e)
