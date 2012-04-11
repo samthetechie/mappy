@@ -34,7 +34,8 @@ function initMap() {
     });
 
     var london = new L.LatLng(51.505, -0.09);
-    map.setView(london, 13)
+    var ny = new L.LatLng(40.7300, -73.9811);    
+    map.setView(ny, 13)
 
     map.addLayer(cloudmade);
 

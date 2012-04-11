@@ -11,9 +11,9 @@
         var L_ROOT_URL = '{{ url_for('static', filename='') }}';
     </script>
 
-    <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}" />
     <!--[if lte IE 8]>
-        <link rel="stylesheet" href="http://code.leafletjs.com/leaflet-0.3.1/leaflet.ie.css" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.ie.css') }}" />
     <![endif]-->
     <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
 
@@ -53,7 +53,26 @@
     </script>
 </head>
 <body>
-    <div id="map"></div>
+    <div id="container">
+        <div id="map"></div>
+        <div id="spacer"></div>
+        <div id="controls">
+					<h4>Marker</h4>
+						    <input type="text" name="title" value="">
+							<textarea class="info"></textarea>
+							<button id="createmarker">Add Marker</button>							
+					
+					<h4>Polyline</h4>			
+						    <input type="text" name="title" value="">
+							<textarea class="info"></textarea>
+							<button id="creatpolyline">Add Polyline</button>
+
+					<h4>Polygon</h4>
+						    <input type="text" name="title" value="">
+							<textarea class="info"></textarea>
+							<button id="createpolygon">Add Polygon</button>							
+        </div>
+    </div>
 
     {% raw %}
     <div id="template_feature_form">

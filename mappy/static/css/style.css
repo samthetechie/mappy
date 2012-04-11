@@ -1,5 +1,23 @@
-html, body, #map {
+html, body, #container{
     height: 100%;
+    width: 100%;
+}
+
+#map{
+    float: left;    
+    height: 100%;
+    width: 75%;
+}
+
+#spacer{
+    float: left;
+    height: 100%;
+    width: 5%;
+}
+
+#controls{
+    float: left;
+    width: 20%;
 }
 
 .leaflet-control-zoom-in {
