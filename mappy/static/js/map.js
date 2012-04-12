@@ -197,7 +197,7 @@ function getAllFeatures() {
 function onMapClick(e) {
 
     if (bMarkerMode){
-    console.log("bMarkerMode is True and the map was clicked");
+        console.log("bMarkerMode is True and the map was clicked");
         popup = new L.Popup();
         var template = $('#template_feature_form').html();
         var content = Mustache.to_html(template, {'lon': e.latlng.lng.toFixed(4), 
@@ -206,8 +206,15 @@ function onMapClick(e) {
         popup.setContent(content);
         map.openPopup(popup);    
     }
+    else if (bPolylineMode){
+        console.log("bPolylineMode is True and the map was clicked");
+    }
+    else if (bPolygonMode){
+        console.log("bPolygonMode is True and the map was clicked");
+    }
+
     else{
-    console.log("bMarkerMode is False and the map was clicked");
+    console.log("We are not in an editing mode and the map was clicked");
     }
 }
 
