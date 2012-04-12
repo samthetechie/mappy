@@ -2,44 +2,26 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>Mappy</title>
-
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Sukey Webapp- Keeping demonstrators safe, mobile & informed.</title> 
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+	<meta name="description" content="Sukey is a mapping and reporting tool designed to keep demonstrators safe, mobile & informed." /> 
+	<meta name="keywords" content="Sukey, protest map, live protest, kettling, GIS, demo2011, demonstrations, #sukey, sukeyData" /> 
+	<meta name="robots" content="index, follow" /> 
     <script type="text/javascript">
         var L_ROOT_URL = '{{ url_for('static', filename='') }}';
     </script>
 
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" type="image/x-icon" />
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />  -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.css') }}" />
+    
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.ie.css') }}" />
     <![endif]-->
+    
     <script src="http://code.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-
-    {% if config.MOBILE %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-    <script type="text/javascript">
-        function hideAddressBar(){
-            if (document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
-                document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
-                setTimeout(window.scrollTo(1,1),0);
-        }
-        window.addEventListener("load",function(){hideAddressBar();});
-        window.addEventListener("orientationchange",hideAddressBar());
-    </script>
-    {% endif %}
-
-    {% if config.MOBILE and config.DEBUG and config.JSCONSOLE_KEY %}
-    <script src="http://jsconsole.com/remote.js?{{ config.JSCONSOLE_KEY }}"></script>
-    {% endif %}
-
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="http://mustache.github.com/extras/mustache.js"></script>
-
     <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 
     <script type="text/javascript">
@@ -51,92 +33,65 @@
                 features: "{{ config['PUBNUB_CHANNELS']['features'] }}"
             };
     </script>
+<style type="text/css">    
+    html, body, #map{
+    height: 100%;
+    width: 100%;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+}
+
+.leaflet-control-zoom-in {
+    background-image: url({{ url_for('static', filename='images/zoom-in.png') }});
+    margin-bottom: 5px;
+}
+.leaflet-control-zoom-out {
+    background-image: url({{ url_for('static', filename='images/zoom-out.png') }});
+}
+
+#template_feature_form, #template_feature {
+    display: none;
+}
+
+.geolocation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 10px;
+    margin-top: 70px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    color: rgba(255, 255, 255, 1);
+    z-index: 100;
+}
+.geolocation a {
+    background-color: rgba(255, 255, 255, 0.75);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url({{ url_for('static', filename='images/location.png') }});
+    display: block;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    width: 19px;
+    height: 19px;
+}
+.geolocation a:hover {
+    background-color: #fff;
+}
+</style>   
 </head>
 <body>
-    <div id="container">
-        <div id="map"></div>
-        <div id="spacer"></div>
-        <div id="controls">
-					<h4>Marker</h4>
-						    <input type="text" name="title" value="">
-							<textarea class="info"></textarea>
-
-						<button id="markerdefine">Create Marker</button> or 
-
-						<select id="markerlist">
-							<option value="none" selected>Select a Marker</option>
-						</select>
-						<div id="markeroptions" class="options">
-							<input type="hidden" id="featureid" />
-							<button id="markerzoom">Zoom to</button>
-							<button id="markerpan">Pan to</button>
-							<button id="markeredit">Edit</button>
-							<button id="markerrename">Rename</button>
-							<button id="markerremove">Delete</button>
-							<br />
-						</div>
-					
-					<h4>Polyline</h4>			
-						    <input type="text" name="title" value="">
-							<textarea class="info"></textarea>
-						<button id="polylinedefine">Create Polyline</button> or 
-
-						<select id="polylinelist">
-							<option value="none" selected>Select a Polyline</option>
-						</select>
-						<div id="polylineoptions" class="options">
-							<input type="hidden" id="featureid" />
-							<button id="polylinezoom">Zoom to</button>
-							<button id="polylinepan">Pan to</button>
-							<button id="polylineedit">Edit</button>
-							<button id="polylinerename">Rename</button>
-							<button id="polylineremove">Delete</button>
-							<br />
-						</div>
-
-					<h4>Polygon</h4>
-						    <input type="text" name="title" value="">
-							<textarea class="info"></textarea>
-							
-						<button id="polygondefine">Create Polygon</button> or 
-
-						<select id="polygonlist">
-							<option value="none" selected>Select a Polygon</option>
-						</select>
-						<div id="polygonoptions" class="options">
-							<input type="hidden" id="featureid" />
-							<button id="polygonzoom">Zoom to</button>
-							<button id="polygonpan">Pan to</button>
-							<button id="polygonedit">Edit</button>
-							<button id="polygonrename">Rename</button>
-							<button id="polygonremove">Delete</button>
-							<br />
-						</div>							
-
-        </div>
-    </div>
-
-    {% raw %}
-    <div id="template_feature_form">
-        <p>Adding point at ({{lat}}, {{lon}})</p>
-        <form id="feature_form" onsubmit="return addFeature(this);">
-            <label for="title">Title:</label>
-            <input type="text" name="title"></input><br />
-            <span class="class1"><input type="radio" name="urgency" value="1"/></span> 
-            <span class="class2"><input type="radio" name="urgency" value="2" checked="checked"/></span> 
-            <span class="class3"><input type="radio" name="urgency" value="3"/></span><br />
-            <textarea name="info" maxlength="100"></textarea><br/> 
-            <input type="hidden" name="coords" value="{{lon}},{{lat}}"/> 
-            <input type="submit" /> 
-        </form>
-    </div>
-    <div id="template_feature">
-        <p>Title: {{title}}</p>
-        <p>Info: {{info}}</p>
-        <p>Urgency: {{urgency}}</p>
-    </div>
-    {% endraw %}
-
+    <div id="map"></div>
+    <div class="geolocation">
+    <a href="#" onclick="geoLocate(); return false;" title="My Location"></a>
+</div>    
     <div sub-key="{{ config.PUBNUB_SUB_KEY }}" ssl="off" origin="pubsub.pubnub.com" id="pubnub"></div>
     <script src="http://cdn.pubnub.com/pubnub-3.1.min.js"></script>
 </body>

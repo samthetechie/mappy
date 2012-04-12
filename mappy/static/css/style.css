@@ -1,33 +1,51 @@
-html, body, #container{
+html, body, #map{
     height: 100%;
     width: 100%;
 }
 
-#map{
-    float: left;    
-    height: 100%;
-    width: 75%;
-}
-
-#spacer{
-    float: left;
-    height: 100%;
-    width: 5%;
-}
-
-#controls{
-    float: left;
-    width: 20%;
+body {
+	padding: 0;
+	margin: 0;
 }
 
 .leaflet-control-zoom-in {
-    background-image: url(../images/zoom-in.png);
+    background-image: url(../static/images/zoom-in.png);
     margin-bottom: 5px;
 }
 .leaflet-control-zoom-out {
-    background-image: url(../images/zoom-out.png);
+    background-image: url(../static/images/zoom-out.png);
 }
 
 #template_feature_form, #template_feature {
     display: none;
+}
+
+.geolocation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 10px;
+    margin-top: 70px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    color: rgba(255, 255, 255, 1);
+    z-index: 100;
+}
+.geolocation a {
+    background-color: rgba(255, 255, 255, 0.75);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url(../static/images/location.png);
+    display: block;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    width: 19px;
+    height: 19px;
+}
+.geolocation a:hover {
+    background-color: #fff;
 }
