@@ -27,13 +27,15 @@ function initMap() {
     map = new L.Map('map');
 
     var cloudmade = new L.TileLayer(TILES_URL, {
-        // attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-        subdomains: ['otile1', 'otile2', 'otile3', 'otile4'],
-        maxZoom: 18
+	minZoom: 0,			
+	maxZoom: 5,
+	tileSize: 256,
+	continuousWorld: true,
+	attribution: '29C3-usermap'
     });
 
-    var london = new L.LatLng(51.505, -0.09);
-    map.setView(london, 13)
+    var london = new L.LatLng(-70.68542, -83.54004);
+    map.setView(london, 5)
 
     map.addLayer(cloudmade);
 

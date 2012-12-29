@@ -1,11 +1,11 @@
 def _init_app():
     from flask import Flask
 
-    from . import default_config
+    from . import config
 
     app = Flask(__name__, instance_relative_config=True)
 
-    app.config.from_object(default_config)
+    app.config.from_object(config)
     app.config.from_envvar(app.name.upper() + '_SETTINGS', silent=True)
     app.config.from_pyfile('local_config.py', silent=True)
 
